@@ -1,0 +1,38 @@
+From 125fafe3c628bcf231af7c45a9cd3186a772080d Mon Sep 17 00:00:00 2001
+From: "eeeric3995@yahoo.com" <ihxx2s7tbu0>
+Date: Wed, 15 Jul 2020 10:23:55 -0400
+Subject: [PATCH] fixed syntax
+
+---
+ src/App.tsx | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
+
+diff --git a/src/App.tsx b/src/App.tsx
+index ff675ec..1871d1c 100755
+--- a/src/App.tsx
++++ b/src/App.tsx
+@@ -40,11 +40,18 @@ class App extends Component<{}, IState> {
+    * Get new data from server and update the state with the new data
+    */
+   getDataFromServer() {
+-    DataStreamer.getData((serverResponds: ServerRespond[]) => {
++    let x = 0;
++    const interval = setInterval(() => {
++      DataStreamer.getData((serverResponds: ServerRespond[]) => {
+       // Update the state by creating a new array of data that consists of
+       // Previous data in the state and the new data from server
+-      this.setState({ data: [...this.state.data, ...serverResponds] });
+-    });
++        this.setState({ data: serverResponds, showGraph: true, });
++      });
++      x++;
++      if (x > 1000){
++        clearInterval(interval);
++      }
++  }, 100);
+   }
+ 
+   /**
+-- 
+2.20.1 (Apple Git-117)
+
